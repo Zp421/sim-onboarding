@@ -3,6 +3,7 @@ import matplotlib.animation as animation
 from dataclasses import dataclass
 import numpy as np
 
+import math
 
 
 @dataclass
@@ -26,9 +27,9 @@ def step (state:State) -> State:
     lateral_v = 0  #m/s
 
     if state.time <= 3:
-        steer_angle = (pi/180.0)*state.time/3                #input is steering angle
+        steer_angle = (math.pi/180.0)*state.time/3                #input is steering angle
     elif state.time <= 10:
-        steer_angle = (pi/180.0)*5.0
+        steer_angle = (math.pi/180.0)*5.0
     else:
         steer_angle = 0.0
 
