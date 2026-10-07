@@ -16,6 +16,7 @@ class State:
     Slip_angle:float
     Lateral_force:float
     Lateral_acceleration:float
+    
 
 
 s0 = State(xvel=0.0, time=0.0, xpos=0.0, ypos=0.0,Lateral_velocity=0.0,Lateral_force=0.0,Slip_angle=0.0,Lateral_acceleration=0.0)
@@ -29,6 +30,7 @@ slip_angle_records = [0.0]
 lateral_force_records = [0.0]
 
 
+
 def step (state:State) -> State:
     mass = 300 #kg
     max_torque = 180 #NM
@@ -37,8 +39,12 @@ def step (state:State) -> State:
 
     forward_speed = 15    #m/s
     cornering_stiffness = 36000   #N/rad
-    
     steer_angle = 0.0
+
+
+
+
+
 
     if state.time <= 3:
         steer_angle = (math.pi/180.0)*state.time/3   
