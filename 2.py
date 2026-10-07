@@ -96,7 +96,7 @@ import matplotlib.pyplot as plt
 
 
 fig, ((ax1, ax2, ax3, ax4)) = plt.subplots(4, 1, figsize=(10, 7))
-fig.suptitle("Vehicle Dynamics Simulation Summary")
+fig.suptitle("Graph")
 
 (line1,) = ax1.plot(time_step_records, lateral_velocity_records, color="black")
 ax1.set_ylabel("Lateral Velocity")

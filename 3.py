@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from dataclasses import dataclass
 import numpy as np
-
+#use Numpy array
 import math
 
 
@@ -54,7 +54,7 @@ def step (state:State) -> State:
 
     if state.time <= 1:
 
-        Acceleration = state.Acceleration + 0.5   #timestep is 0.1 so 5m/s is added in 10 times
+        Acceleration = state.Acceleration + 0.5   #timestep is 0.1 so 5m/s is added in 10 times  , now timesetp is 0.5 so +2.5 accel instead
     elif state.time <= 10:
         Acceleration = 5
 
@@ -67,7 +67,7 @@ def step (state:State) -> State:
 
     torque = max_torque * steer_angle
     force_at_wheel = (torque * gear_ratio)/wheel_radius
-    acceleration = force_at_wheel/mass
+    #acceleration = force_at_wheel/mass
 
     new_Slip_angle = steer_angle - (state.Lateral_velocity/forward_speed)
     new_Lateral_force = cornering_stiffness * new_Slip_angle
@@ -79,7 +79,7 @@ def step (state:State) -> State:
     new_xvel = state.Xvelocity + (new_Net_acceleration * time_step)
 
 
-    new_vel = state.Xvelocity + acceleration * time_step
+    #new_yvel = state.Xvelocity + Acceleration * time_step
     new_time = state.time + time_step
     new_xpos = state.xpos + state.Xvelocity * time_step
 
@@ -112,24 +112,24 @@ import matplotlib.pyplot as plt
 
 
 
-fig, (ax1, ax2, ax3, ) = plt.subplots(3, 1, figsize=(10, 7))
+fig, (ax1, ax2, ax3, ) = plt.subplots(3, 1, figsize=(10, 12))
 fig.suptitle("Graph")
 
 (line1,) = ax1.plot(time_step_records, Drag_records, color="black")
 ax1.set_ylabel("Drag")
-ax1.set_xlim(0, 30)
+ax1.set_xlim(0, 100)
 ax1.set_ylim(-0.2, 1000)
 ax1.grid(True)
 
 (line2,) = ax2.plot(time_step_records, Net_acceleration_records, color="red")
 ax2.set_ylabel("Net Acceleration")
-ax2.set_xlim(0, 30)
-ax2.set_ylim(-1, 8)
+ax2.set_xlim(0, 100)
+ax2.set_ylim(-8, 8)
 ax2.grid(True)
 
 (line3,) = ax3.plot(time_step_records, Xvelocity_records, color="pink")
 ax3.set_ylabel("X Velocity")
-ax3.set_xlim(0, 30)
+ax3.set_xlim(0, 100)
 ax3.set_ylim(-0.02, 50)
 ax3.grid(True)
 ax3.set_xlabel("Time")
@@ -152,11 +152,12 @@ def animate (i):
     line2.set_data(time_step_records, Net_acceleration_records)
     line3.set_data(time_step_records, Xvelocity_records)
 
-    if  s0.time >= 10 and s0.Acceleration <= 5:
+    if  s0.time > 10 and s0.Xvelocity <= 0.1:
         ani.event_source.stop()
+        print(len(time_step_records))
 
 ani = animation.FuncAnimation(
-    fig, animate, frames=100, interval=50, blit=False, repeat=False
+    fig, animate, frames=100, interval=5, blit=False, repeat=False
 )
 plt.show()
 
