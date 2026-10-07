@@ -22,11 +22,11 @@ s0 = State(xvel=0.0, time=0.0, xpos=0.0, ypos=0.0,Lateral_velocity=0.0,Lateral_f
 time_step = 0.1  #0.01
 
 
-time_step_records = [s0.time]
-lateral_velocity_records = [s0.Lateral_velocity]
-lateral_acceleration_records = [s0.Lateral_acceleration]
-slip_angle_records = [s0.Slip_angle]
-lateral_force_records = [s0.Lateral_force]
+time_step_records = [0.0]
+lateral_velocity_records = [0.0]
+lateral_acceleration_records = [0.0]
+slip_angle_records = [0.0]
+lateral_force_records = [0.0]
 
 
 def step (state:State) -> State:
@@ -36,7 +36,7 @@ def step (state:State) -> State:
     gear_ratio = 3 #3:1
 
     forward_speed = 15    #m/s
-    cornering_stiffness = 3600   #N/rad
+    cornering_stiffness = 36000   #N/rad
     
     steer_angle = 0.0
 
@@ -82,64 +82,42 @@ def step (state:State) -> State:
 
 import matplotlib.pyplot as plt
 
-x = time_step_records
-
-y = lateral_velocity_records
 
 
 
-# function to show the plot
-(line1,) = plt.plot(
-    time_step_records,
-    lateral_velocity_records,
-    color="black",
-    linestyle="dashed",
-    linewidth=1,
-    marker="o",
-    markerfacecolor="black",
-    markersize=2,
-)
-
-(line2,) = plt.plot(
-    time_step_records,
-    lateral_acceleration_records,
-    color="red",
-    linestyle="dashed",
-    linewidth=1,
-    marker="o",
-    markerfacecolor="black",
-    markersize=2,
-)
-
-(line3,) = plt.plot(
-    time_step_records,
-    slip_angle_records,
-    color="green",
-    linestyle="dashed",
-    linewidth=1,
-    marker="o",
-    markerfacecolor="black",
-    markersize=2,
-)
-
-(line4,) = plt.plot(
-    time_step_records,
-    lateral_force_records,
-    color="green",
-    linestyle="dashed",
-    linewidth=1,
-    marker="o",
-    markerfacecolor="black",
-    markersize=2,
-)
 
 
-plt.xlim(0, 15)
-plt.ylim(-10.0, 20.0)
 
-plt.xlabel("time(measured in seconds)")
-plt.ylabel("magnitude")
-plt.title("Some cool customizations!")
+
+fig, ((ax1, ax2, ax3, ax4)) = plt.subplots(4, 1, figsize=(10, 7))
+fig.suptitle("Vehicle Dynamics Simulation Summary")
+
+(line1,) = ax1.plot(time_step_records, lateral_velocity_records, color="black")
+ax1.set_ylabel("Lateral Velocity")
+ax1.set_xlim(0, 10)
+ax1.set_ylim(-0.2, 2.0)
+ax1.grid(True)
+
+(line2,) = ax2.plot(time_step_records, lateral_acceleration_records, color="red")
+ax2.set_ylabel("Lateral Accel")
+ax2.set_xlim(0, 10)
+ax2.set_ylim(-1, 8)
+ax2.grid(True)
+
+(line3,) = ax3.plot(time_step_records, slip_angle_records, color="pink")
+ax3.set_ylabel("Slip Angle")
+ax3.set_xlim(0, 10)
+ax3.set_ylim(-0.02, 0.1)
+ax3.grid(True)
+
+(line4,) = ax4.plot(time_step_records, lateral_force_records, color="green")
+ax4.set_ylabel("Lateral Force")
+ax4.set_xlim(0, 10)
+ax4.set_ylim(-100, 2500)
+ax4.grid(True)
+ax4.set_xlabel("Time")
+
+
 
 def animate (i):
     global s0
@@ -153,13 +131,12 @@ def animate (i):
     line2.set_data(time_step_records, lateral_acceleration_records)
     line3.set_data(time_step_records, slip_angle_records)
     line4.set_data(time_step_records, lateral_force_records)
-    if s0.time >= 14:
+    if s0.time >= 10:
         ani.event_source.stop()
 
 ani = animation.FuncAnimation(
-    plt.gcf(), animate, frames=150, interval=50, blit=False, repeat=False
+    fig, animate, frames=100, interval=50, blit=False, repeat=False
 )
-
 plt.show()
 
 
