@@ -157,7 +157,7 @@ def animate (i):
         print(len(time_step_records))
 
 ani = animation.FuncAnimation(
-    fig, animate, frames=100, interval=5, blit=False, repeat=False
+    fig, animate, frames=10000, interval=0, blit=False, repeat=False
 )
 plt.show()
 
