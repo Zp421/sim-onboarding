@@ -49,20 +49,16 @@ def animate (i):
     global s0
     s0 =step(s0)
     ax.clear()
-    ax.scatter([s0.xpos,120],[5,s0.ypos], s= 200, c = 'pink', marker= 's')    #==
+    ax.scatter([s0.xpos,0],[0,0], s= 200, c = 'pink', marker= 's')    #==
     ax.set_xlim(0,300)
     ax.set_ylim(0,10)
+    ax.set_xlabel('X position (m)')
     return ax,
     
 
-
-fig = plt.figure(figsize=(3,3), dpi=150)
+fig = plt.figure(figsize=(4,4), dpi=150)
 ax = fig.add_subplot(111)
-ax.grid()
-ax.set_xlim(-2, 2)
-ax.set_ylim(-2, 2)
-# these lines are so the animation doesnt zoom in or out
 
-plt.pause(3)
+
 ani = animation.FuncAnimation(fig, animate, interval=0)
 plt.show()

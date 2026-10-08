@@ -52,22 +52,18 @@ def step (state:State) -> State:
     drag_coefficient = 0.7
     Acceleration = 0.0
 
-    if state.time <= 1:
+    if state.time <= 10:
 
-        Acceleration = state.Acceleration + 0.5   #timestep is 0.1 so 5m/s is added in 10 times  , now timesetp is 0.5 so +2.5 accel instead
-    elif state.time <= 10:
-        Acceleration = 5
-
+        Acceleration = 5   #acceleration is at 5m/s^2
     else:
         Acceleration = 0
+    
     
 
 
 
 
-    torque = max_torque * steer_angle
-    force_at_wheel = (torque * gear_ratio)/wheel_radius
-    #acceleration = force_at_wheel/mass
+
 
     new_Slip_angle = steer_angle - (state.Lateral_velocity/forward_speed)
     new_Lateral_force = cornering_stiffness * new_Slip_angle
@@ -79,7 +75,7 @@ def step (state:State) -> State:
     new_xvel = state.Xvelocity + (new_Net_acceleration * time_step)
 
 
-    #new_yvel = state.Xvelocity + Acceleration * time_step
+    
     new_time = state.time + time_step
     new_xpos = state.xpos + state.Xvelocity * time_step
 
@@ -117,19 +113,19 @@ fig.suptitle("Graph")
 
 (line1,) = ax1.plot(time_step_records, Drag_records, color="black")
 ax1.set_ylabel("Drag")
-ax1.set_xlim(0, 100)
+ax1.set_xlim(0, 200)
 ax1.set_ylim(-0.2, 1000)
 ax1.grid(True)
 
 (line2,) = ax2.plot(time_step_records, Net_acceleration_records, color="red")
 ax2.set_ylabel("Net Acceleration")
-ax2.set_xlim(0, 100)
+ax2.set_xlim(0, 200)
 ax2.set_ylim(-8, 8)
 ax2.grid(True)
 
 (line3,) = ax3.plot(time_step_records, Xvelocity_records, color="pink")
 ax3.set_ylabel("X Velocity")
-ax3.set_xlim(0, 100)
+ax3.set_xlim(0, 200)
 ax3.set_ylim(-0.02, 50)
 ax3.grid(True)
 ax3.set_xlabel("Time")
