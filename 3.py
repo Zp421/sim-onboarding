@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from dataclasses import dataclass
 import numpy as np
-#use Numpy array
+
 import math
 
 
@@ -154,7 +154,7 @@ def animate (i):
 
     if  s0.time > 10 and s0.Xvelocity <= 0.1:
         ani.event_source.stop()
-        print(len(time_step_records))
+        
 
 ani = animation.FuncAnimation(
     fig, animate, frames=10000, interval=0, blit=False, repeat=False
