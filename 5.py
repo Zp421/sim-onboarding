@@ -104,7 +104,7 @@ import matplotlib.pyplot as plt
 
 
 
-fig, (ax1, ax2, ax3, ) = plt.subplots(3, 1, figsize=(10, 5))
+fig, (ax1, ax2, ax3, ) = plt.subplots(3, 1, figsize=(10, 5))   
 fig.suptitle("Graph")
 
 (line1,) = ax1.plot(time_step_records, Braking_force_records, color="black")

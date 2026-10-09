@@ -8,10 +8,9 @@ import math
 
 @dataclass
 class State:
-    xvel:float
+    
     time:float
-    xpos:float
-    ypos:float
+    
     Lateral_velocity:float
     Slip_angle:float
     Lateral_force:float
@@ -19,7 +18,7 @@ class State:
     
 
 
-s0 = State(xvel=0.0, time=0.0, xpos=0.0, ypos=0.0,Lateral_velocity=0.0,Lateral_force=0.0,Slip_angle=0.0,Lateral_acceleration=0.0)
+s0 = State(time=0.0,Lateral_velocity=0.0,Lateral_force=0.0,Slip_angle=0.0,Lateral_acceleration=0.0)
 time_step = 0.1  #0.01
 
 
@@ -67,14 +66,12 @@ def step (state:State) -> State:
 
 
 
-    new_vel = state.xvel + acceleration * time_step
+    
     new_time = state.time + time_step
-    new_xpos = state.xpos + state.xvel * time_step
+    
 
     newState = State(
-        xvel = new_vel,
-        xpos = new_xpos,
-        ypos = 0.0,
+
         time = new_time,
 
         Slip_angle = new_Slip_angle,
@@ -95,7 +92,7 @@ import matplotlib.pyplot as plt
 
 
 
-fig, ((ax1, ax2, ax3, ax4)) = plt.subplots(4, 1, figsize=(10, 7))
+fig, ((ax1, ax2, ax3, ax4)) = plt.subplots(4, 1, figsize=(10, 7))  #plotting the graph with stored values from arrays 4,1 is the number of rows and columns on how graphs be diplayed
 fig.suptitle("Graph")
 
 (line1,) = ax1.plot(time_step_records, lateral_velocity_records, color="black")
@@ -141,7 +138,7 @@ def animate (i):
         ani.event_source.stop()
 
 ani = animation.FuncAnimation(
-    fig, animate, frames=100, interval=50, blit=False, repeat=False
+    fig, animate, frames=100, interval=50, blit=False, repeat=False  # frames = numbers being displayed, interval = time between each frame, blit = True means only re-draw the parts that have changed, repeat = False means the animation will not loop
 )
 plt.show()
 
